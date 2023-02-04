@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37ba65bbeaf84434bb1d4f71512e2c40, type: 3}
   m_Name: Mercury
   m_EditorClassIdentifier: 
-  gravitationalForce: 9.8
-  gravityRadius: 10
+  gravitationalForce: 2
+  gravityRadius: 4

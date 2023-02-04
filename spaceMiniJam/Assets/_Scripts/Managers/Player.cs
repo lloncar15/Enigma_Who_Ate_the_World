@@ -4,11 +4,11 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private PlayerStats stats;
-    private float fuel = 100f;
-    private int playerHealth = 3;
-    private GameObject closestPlanet = null;
+    public float fuel = 100f;
+    public int playerHealth = 3;
+    public GameObject closestPlanet = null;
 
-    private float invulnerableDeltaTime = 0.0f;
+    public float invulnerableDeltaTime = 0.0f;
     private bool invulnerable = false;
 
     public static event Action OnHealthLost;
@@ -115,6 +115,7 @@ public class Player : MonoBehaviour
 
     private void LoseHealth()
     {
+
         --playerHealth;
         if (playerHealth == 0)
         {
@@ -130,22 +131,6 @@ public class Player : MonoBehaviour
         }
         closestPlanet.GetComponent<PlanetController>().putHat();
         OnHatPut?.Invoke();
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Planet")
-        {
-            closestPlanet = collision.gameObject;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.tag == "Planet")
-        {
-            closestPlanet = null;
-        }
     }
 }
 

@@ -18,8 +18,8 @@ MonoBehaviour:
   invulnerableTime: 3
   speed: 5
   maxSpeed: 10
-  slowDownFactor: 0.95
-  maxSpeedWithBoost: 10
+  slowDownFactor: 0.97
+  maxSpeedWithBoost: 15
   rotationSpeed: 90
   slowingSpeed: 2
   boostMultiplier: 1.5
