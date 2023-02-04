@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class PlanetController : MonoBehaviour
 {
-    [SerializeField] public float gravitationalForce = 9.8f;
-    [SerializeField] public float gravityRadius = 10f;
+    [SerializeField] public Planet planet;
 
     public bool hasHat = false;
 
@@ -19,7 +18,7 @@ public class PlanetController : MonoBehaviour
     private void PushAway()
     {
         // find all rigidbodies within the gravity radius
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, gravityRadius);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, planet.gravityRadius);
 
         // apply gravitational force to each rigidbody
         foreach (Collider2D collider in colliders)
@@ -33,7 +32,7 @@ public class PlanetController : MonoBehaviour
             if (rigidbody != null)
             {
                 Vector2 direction = (rigidbody.position - (Vector2)transform.position).normalized;
-                rigidbody.AddForce(direction * gravitationalForce * rigidbody.mass);
+                rigidbody.AddForce(direction * planet.gravitationalForce * rigidbody.mass);
             }
         }
     }
@@ -46,6 +45,6 @@ public class PlanetController : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, gravityRadius);
+        Gizmos.DrawWireSphere(transform.position, planet.gravityRadius);
     }
 }

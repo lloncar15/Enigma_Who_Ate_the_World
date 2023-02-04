@@ -3,47 +3,36 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [Header("PlayerSettings")]
-    [SerializeField] private int playerHealth = 3;
-    [SerializeField] private float fuel = 100f;
-    [SerializeField] private float fuelMax = 100f;
-    [SerializeField] private float fuelCollect = 20f;
-    [SerializeField] public float fuelConsumptionRate = 0.5f;
+    [SerializeField] private PlayerStats stats;
+    private float fuel = 100f;
+    private int playerHealth = 3;
     private GameObject closestPlanet = null;
 
-
-    [SerializeField] public float invulnerableTime = 3.0f;
     private float invulnerableDeltaTime = 0.0f;
     private bool invulnerable = false;
-
-
-    [Header("Movement")]
-    [SerializeField] public float speed = 5f;
-    [SerializeField] public float maxSpeed = 10f;
-    [SerializeField] public float slowDownFactor = 0.95f;
-    [SerializeField] public float maxSpeedWithBoost = 10f;
-    [SerializeField] public float rotationSpeed = 90f;
-    [SerializeField] public float slowingSpeed = 2f;
-    [SerializeField] public float boostMultiplier = 1.5f;
 
     public static event Action OnHealthLost;
     public static event Action OnGameOver;
     public static event Action OnHatPut;
+    public static event Action<bool> OnFuelCollected;
 
     private Rigidbody2D rigidBody;
 
     private void OnEnable()
     {
         BlackHoleController.OnBlackHoleEntered += BlackHoleEntered;
+        ConsumableController.OnConsumableCollected += CollectFuel;
     }
 
     private void OnDisable()
     {
         BlackHoleController.OnBlackHoleEntered -= BlackHoleEntered;
+        ConsumableController.OnConsumableCollected -= CollectFuel;
     }
 
     private void Start()
     {
+        fuel = stats.fuelMax;
         rigidBody = GetComponent<Rigidbody2D>();
     }
 
@@ -53,28 +42,28 @@ public class Player : MonoBehaviour
         float forwardInput = Input.GetAxis("Vertical");
 
         // get input for rotating left and right
-        float rotationInput = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
+        float rotationInput = Input.GetAxis("Horizontal") * stats.rotationSpeed * Time.deltaTime;
 
         // check if slowing key is pressed
         if (Input.GetKey(KeyCode.S))
         {
-            forwardInput = Mathf.Max(forwardInput - slowingSpeed * Time.deltaTime, 0);
+            forwardInput = Mathf.Max(forwardInput - stats.slowingSpeed * Time.deltaTime, 0);
         }
 
         // check if boost key is pressed
         bool spedUp = false;
         if (Input.GetKey(KeyCode.Space) && fuel > 0)
         {
-            forwardInput *= boostMultiplier;
-            fuel -= fuelConsumptionRate * Time.deltaTime;
+            forwardInput *= stats.boostMultiplier;
+            fuel -= stats.fuelConsumptionRate * Time.deltaTime;
             spedUp = true;
         }
 
         // apply force to move the ship forward
-        rigidBody.AddRelativeForce(new Vector2(0, forwardInput * speed));
-        rigidBody.velocity *= slowDownFactor;
+        rigidBody.AddRelativeForce(new Vector2(0, forwardInput * stats.speed));
+        rigidBody.velocity *= stats.slowDownFactor;
 
-        float localMaxSpeed = spedUp ? maxSpeedWithBoost : maxSpeed;
+        float localMaxSpeed = spedUp ? stats.maxSpeedWithBoost : stats.maxSpeed;
         // limit the speed of the ship
         if (rigidBody.velocity.magnitude > localMaxSpeed)
         {
@@ -104,12 +93,14 @@ public class Player : MonoBehaviour
     private void CollectFuel()
     {
         // skip collecting fuel if you have max fuel
-        if (fuel >= fuelMax)
+        if (fuel >= stats.fuelMax)
         {
+            OnFuelCollected?.Invoke(false);
             return;
         }
 
-        fuel = Mathf.Clamp(fuel + fuelCollect, 0, fuelMax);
+        fuel = Mathf.Clamp(fuel + stats.fuelCollectAmount, 0, stats.fuelMax);
+        OnFuelCollected?.Invoke(true);
     }
 
     private void BlackHoleEntered()
@@ -118,7 +109,7 @@ public class Player : MonoBehaviour
             return;
         LoseHealth();
         invulnerable = true;
-        invulnerableDeltaTime = invulnerableTime;
+        invulnerableDeltaTime = stats.invulnerableTime;
         // TODO: ACTIVATE THE SHADER ANIMATION
     }
 
