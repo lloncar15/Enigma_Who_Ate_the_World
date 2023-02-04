@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f22564dc3e4cbb24fa94d8874188e889, type: 3}
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
-  fuelMax: 100
-  fuelCollectAmount: 20
-  fuelConsumptionRate: 0.5
-  invulnerableTime: 3
+  fuelMax: 1
+  fuelCollectAmount: 0.2
+  fuelConsumptionRate: 0.1
+  invulnerableTime: 5
   speed: 5
   maxSpeed: 10
   slowDownFactor: 0.97
