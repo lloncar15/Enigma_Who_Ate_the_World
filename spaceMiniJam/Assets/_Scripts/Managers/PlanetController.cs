@@ -24,6 +24,11 @@ public class PlanetController : MonoBehaviour
         // apply gravitational force to each rigidbody
         foreach (Collider2D collider in colliders)
         {
+            if (collider.gameObject.tag != "Player")
+            {
+                continue;
+            }
+
             Rigidbody2D rigidbody = collider.GetComponent<Rigidbody2D>();
             if (rigidbody != null)
             {
