@@ -10,9 +10,12 @@ public class BlackHoleController : MonoBehaviour
 {
     public static event Action OnBlackHoleEntered;
 
+    public GameObject positionsChild;
+
     [SerializeField] private float waveIntervalTime = 30.0f;
     [SerializeField] private float intervalStartDelay = 10.0f;
     public float waveInterval = 5.0f;
+    public float expandRate = 0.02f;
 
     public List<GameObject> wavePrefabs;
     public Vector3[] wavePositions;
@@ -21,6 +24,12 @@ public class BlackHoleController : MonoBehaviour
     void Start()
     {
         InvokeRepeating("EmitWaves", intervalStartDelay, waveIntervalTime);
+    }
+
+    private void Update()
+    {
+        Vector3 localScale = transform.localScale;
+        transform.localScale = new Vector3(localScale.x + expandRate, localScale.y + expandRate, localScale.z);
     }
 
     private void EmitWaves()
@@ -44,10 +53,14 @@ public class BlackHoleController : MonoBehaviour
         foreach (int index in indexes)
         {
             Vector3 waveData = wavePositions[index];
-            Vector3 position = new Vector3(waveData.x, waveData.y, 0);
+            Vector3 position = positionsChild.transform.GetChild(index).transform.position;
             Vector3 rotation = new Vector3(0, 0, waveData.z);
             GameObject smallWave = Instantiate(getRandomWavePrefab(), position, Quaternion.Euler(rotation));
+            float blackHoleScale = transform.localScale.x;
             smallWave.GetComponent<WaveCollision>().speed = waveSpeed;
+            smallWave.GetComponent<WaveCollision>().maximumScale *= blackHoleScale;
+            Vector3 smallWaveTransform = smallWave.transform.localScale;
+            smallWave.transform.localScale = new Vector3(smallWaveTransform.x * blackHoleScale, smallWaveTransform.y * blackHoleScale, smallWaveTransform.z);
         }
     }
 

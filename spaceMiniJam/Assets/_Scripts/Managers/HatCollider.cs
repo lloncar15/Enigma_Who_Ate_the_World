@@ -12,6 +12,9 @@ public class HatCollider : MonoBehaviour
     {
         if (collision.gameObject.tag == "Planet")
         {
+            if (collision.gameObject.GetComponent<PlanetController>().hasHat)
+                return;
+
             player.closestPlanet = collision.gameObject;
             OnPlanetProximityEntered?.Invoke();
         }
