@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlanetController : MonoBehaviour
 {
     [SerializeField] public Planet planet;
+    public SpriteRenderer hat;
 
     public bool hasHat = false;
 
@@ -40,6 +41,7 @@ public class PlanetController : MonoBehaviour
     public void putHat()
     {
         hasHat = true;
+        hat.enabled = true;
     }
 
     private void OnDrawGizmosSelected()

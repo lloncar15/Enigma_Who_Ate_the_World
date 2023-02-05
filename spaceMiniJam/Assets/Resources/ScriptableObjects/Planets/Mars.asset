@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37ba65bbeaf84434bb1d4f71512e2c40, type: 3}
   m_Name: Mars
   m_EditorClassIdentifier: 
-  gravitationalForce: 2
-  gravityRadius: 4
+  gravitationalForce: 4
+  gravityRadius: 6
