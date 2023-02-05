@@ -21,6 +21,9 @@ public class BlackHoleController : MonoBehaviour
     public Vector3[] wavePositions;
     public List<BlackHoleWave> wavesList;
 
+    public Animator animator;
+    public GameObject squiggle;
+
     void Start()
     {
         InvokeRepeating("EmitWaves", intervalStartDelay, waveIntervalTime);
@@ -30,6 +33,8 @@ public class BlackHoleController : MonoBehaviour
     {
         Vector3 localScale = transform.localScale;
         transform.localScale = new Vector3(localScale.x + expandRate, localScale.y + expandRate, localScale.z);
+
+        squiggle.transform.Rotate(new Vector3(0, 0, 1));
     }
 
     private void EmitWaves()
@@ -41,12 +46,13 @@ public class BlackHoleController : MonoBehaviour
         //for each of the wave create the waves around it
         for (int i = 0; i < wavePositions.Count(); ++i)
         {
-            StartCoroutine(CreateOneWave(wavePositions[i].indexes, waveInterval * i, wave.waveSpeed));
+            StartCoroutine(CreateOneWave(wavePositions[i].indexes, waveInterval * i, wave.waveSpeed, i == wavePositions.Count() - 1));
         }
     }
 
-    private IEnumerator CreateOneWave(int[] indexes, float waitTime, float waveSpeed)
+    private IEnumerator CreateOneWave(int[] indexes, float waitTime, float waveSpeed, bool changeAngry)
     {
+        animator.SetBool("IsAngry", true);
         yield return Extensions.GetWait(waitTime);
 
         // for each of the index get a random wave and instantiate it at the lociational index and add velocity
@@ -61,6 +67,12 @@ public class BlackHoleController : MonoBehaviour
             smallWave.GetComponent<WaveCollision>().maximumScale *= blackHoleScale;
             Vector3 smallWaveTransform = smallWave.transform.localScale;
             smallWave.transform.localScale = new Vector3(smallWaveTransform.x * blackHoleScale, smallWaveTransform.y * blackHoleScale, smallWaveTransform.z);
+        }
+
+        if (changeAngry)
+        {
+            yield return Extensions.GetWait(0.5f);
+            animator.SetBool("IsAngry", false);
         }
     }
 

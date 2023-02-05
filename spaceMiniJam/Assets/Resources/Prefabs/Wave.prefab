@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 0
   expansionsSpeed: 1.02
-  maximumScale: 8
+  maximumScale: 6
 --- !u!50 &8311293974953969943
 Rigidbody2D:
   serializedVersion: 4
