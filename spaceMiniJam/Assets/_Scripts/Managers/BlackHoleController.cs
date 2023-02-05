@@ -23,6 +23,7 @@ public class BlackHoleController : MonoBehaviour
 
     public Animator animator;
     public GameObject squiggle;
+    public Player player;
 
     void Start()
     {
@@ -34,7 +35,8 @@ public class BlackHoleController : MonoBehaviour
         Vector3 localScale = transform.localScale;
         transform.localScale = new Vector3(localScale.x + expandRate, localScale.y + expandRate, localScale.z);
 
-        squiggle.transform.Rotate(new Vector3(0, 0, 1));
+        if(!player.paused)
+            squiggle.transform.Rotate(new Vector3(0, 0, 1));
     }
 
     private void EmitWaves()

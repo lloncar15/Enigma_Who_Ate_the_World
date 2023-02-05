@@ -8,10 +8,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1630134727560788619, guid: 5a4d348391586d746a5953edce0b0881, type: 3}
+      propertyPath: maximumScale
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3499187590439376566, guid: 5a4d348391586d746a5953edce0b0881, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: b417ae5b97d6e444e94aad08efe8ec21, type: 3}
+    - target: {fileID: 3499187590439376566, guid: 5a4d348391586d746a5953edce0b0881, type: 3}
+      propertyPath: m_SortingOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4510899538634591309, guid: 5a4d348391586d746a5953edce0b0881, type: 3}
       propertyPath: m_Name
       value: Wave Variant

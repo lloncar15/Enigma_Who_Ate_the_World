@@ -1,5 +1,6 @@
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEditor;
 
 public class UIManager : MonoBehaviour
 {
@@ -7,6 +8,13 @@ public class UIManager : MonoBehaviour
     public Player player;
     public int playerHealth = 2;
     public Image[] hearts;
+    public Image[] deadHearts;
+
+    public GameObject GameOver;
+    public GameObject Win;
+    public GameObject Paused;
+    public Image BlackScreen;
+    public Canvas canvas;
 
     private void Update()
     {
@@ -28,8 +36,13 @@ public class UIManager : MonoBehaviour
         if (playerHealth < 0)
             return;
 
-        //TODO: Heart animation
-        hearts[playerHealth].GetComponent<Image>().color = Color.black;
+        hearts[playerHealth].GetComponent<Image>().enabled = false;
+        deadHearts[playerHealth].GetComponent<Image>().enabled = true;
         --playerHealth;
+    }
+
+    public void MainMenuPressed()
+    {
+
     }
 }
