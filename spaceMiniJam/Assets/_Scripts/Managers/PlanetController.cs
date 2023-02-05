@@ -5,6 +5,7 @@ public class PlanetController : MonoBehaviour
 {
     [SerializeField] public Planet planet;
     public SpriteRenderer hat;
+    public ParticleSystem system;
 
     public bool hasHat = false;
 
@@ -42,6 +43,7 @@ public class PlanetController : MonoBehaviour
     {
         hasHat = true;
         hat.enabled = true;
+        Destroy(system);
     }
 
     private void OnDrawGizmosSelected()

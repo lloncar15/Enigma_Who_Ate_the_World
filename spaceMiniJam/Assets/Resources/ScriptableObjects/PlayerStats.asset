@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fuelMax: 1
   fuelCollectAmount: 0.2
-  fuelConsumptionRate: 0.1
+  fuelConsumptionRate: 0.05
   invulnerableTime: 5
   reversedTime: 5
   speed: 5
@@ -23,4 +23,4 @@ MonoBehaviour:
   maxSpeedWithBoost: 15
   rotationSpeed: 90
   slowingSpeed: 2
-  boostMultiplier: 1.5
+  boostMultiplier: 2
