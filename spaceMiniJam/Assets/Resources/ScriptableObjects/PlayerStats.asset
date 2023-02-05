@@ -16,6 +16,7 @@ MonoBehaviour:
   fuelCollectAmount: 0.2
   fuelConsumptionRate: 0.1
   invulnerableTime: 5
+  reversedTime: 5
   speed: 5
   maxSpeed: 10
   slowDownFactor: 0.97

@@ -8,6 +8,7 @@ public class PlayerStats : ScriptableObject
     [SerializeField] public float fuelCollectAmount = 20f;
     [SerializeField] public float fuelConsumptionRate = 0.5f;
     [SerializeField] public float invulnerableTime = 3.0f;
+    [SerializeField] public float reversedTime = 7.0f;
 
     [Header("Movement")]
     [SerializeField] public float speed = 5f;

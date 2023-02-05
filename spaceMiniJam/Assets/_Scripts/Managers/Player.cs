@@ -8,8 +8,11 @@ public class Player : MonoBehaviour
     public int playerHealth = 3;
     public GameObject closestPlanet = null;
 
-    public float invulnerableDeltaTime = 0.0f;
+    private float invulnerableDeltaTime = 0.0f;
     private bool invulnerable = false;
+
+    private float reverseControlsDeltaTime = 0.0f;
+    private bool reversed = false;
 
     public static event Action OnHealthLost;
     public static event Action OnGameOver;
@@ -22,12 +25,14 @@ public class Player : MonoBehaviour
     {
         BlackHoleController.OnBlackHoleEntered += BlackHoleEntered;
         ConsumableController.OnConsumableCollected += CollectFuel;
+        WaveCollision.OnWaveCollision += OnWaveHit;
     }
 
     private void OnDisable()
     {
         BlackHoleController.OnBlackHoleEntered -= BlackHoleEntered;
         ConsumableController.OnConsumableCollected -= CollectFuel;
+        WaveCollision.OnWaveCollision -= OnWaveHit;
     }
 
     private void Start()
@@ -42,7 +47,8 @@ public class Player : MonoBehaviour
         float forwardInput = Input.GetAxis("Vertical");
 
         // get input for rotating left and right
-        float rotationInput = Input.GetAxis("Horizontal") * stats.rotationSpeed * Time.deltaTime;
+        float horizontalInput = reversed ? -Input.GetAxis("Horizontal") : Input.GetAxis("Horizontal");
+        float rotationInput = horizontalInput * stats.rotationSpeed * Time.deltaTime;
 
         // check if slowing key is pressed
         if (Input.GetKey(KeyCode.S))
@@ -81,6 +87,16 @@ public class Player : MonoBehaviour
             {
                 invulnerableDeltaTime = 0;
                 invulnerable = false;
+            }
+        }
+
+        if (reverseControlsDeltaTime > 0)
+        {
+            reverseControlsDeltaTime -= Time.deltaTime;
+            if (reverseControlsDeltaTime <= 0)
+            {
+                reversed = false;
+                reverseControlsDeltaTime = 0;
             }
         }
 
@@ -131,6 +147,13 @@ public class Player : MonoBehaviour
         }
         closestPlanet.GetComponent<PlanetController>().putHat();
         OnHatPut?.Invoke();
+    }
+
+    private void OnWaveHit()
+    {
+        reversed = true;
+        reverseControlsDeltaTime = stats.reversedTime;
+        // TODO: ACTIVATE REVERSE SHADER ANIMATION
     }
 }
 
