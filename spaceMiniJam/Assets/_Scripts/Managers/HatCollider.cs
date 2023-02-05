@@ -14,7 +14,6 @@ public class HatCollider : MonoBehaviour
         {
             player.closestPlanet = collision.gameObject;
             OnPlanetProximityEntered?.Invoke();
-            Console.WriteLine("HEHE");
         }
     }
 
@@ -24,7 +23,6 @@ public class HatCollider : MonoBehaviour
         {
             player.closestPlanet = null;
             OnPlanetProximityExited?.Invoke();
-            Console.WriteLine("HEHE");
         }
     }
 }

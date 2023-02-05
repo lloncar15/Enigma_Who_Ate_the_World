@@ -25,6 +25,7 @@ public class UIManager : MonoBehaviour
 
     private void BlackHoleEntered()
     {
+        Debug.Log("Entered Black Hole - UI");
         if (playerHealth < 0)
             return;
 
