@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Planet
   - HatCollider
+  - CollisionWall
   layers:
   - Default
   - TransparentFX

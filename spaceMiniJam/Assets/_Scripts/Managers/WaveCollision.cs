@@ -23,7 +23,7 @@ public class WaveCollision : MonoBehaviour
         if (localScale.x < maximumScale)
         {
             float scaleTransform = localScale.x * expansionsSpeed;
-            transform.localScale = new Vector3(scaleTransform, localScale.y, localScale.z);
+            transform.localScale = new Vector3(scaleTransform, scaleTransform, localScale.z);
         }
     }
 
