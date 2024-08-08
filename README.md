@@ -1,4 +1,4 @@
-# spaceMiniJam
+# Enigma that ate Earth
 
 https://rt-hellcerberus.itch.io/enigma-that-ate-earth
 
